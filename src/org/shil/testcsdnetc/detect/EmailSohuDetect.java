@@ -9,9 +9,9 @@ import javax.mail.Transport;
 import org.shil.testcsdnetc.db.CsdnAccountDaoImpl;
 import org.shil.testcsdnetc.entity.CsdnAccount;
 
-public class Email163Detect {
+public class EmailSohuDetect {
 
-	public static int test163mail(String email,String password){
+	public static int testSohumail(String email,String password){
 		
 		int status = 0;
 		
@@ -23,7 +23,7 @@ public class Email163Detect {
 		//发送服务器需要身份验证  
 		props.setProperty("mail.smtp.auth","true");
 		//设置邮件服务器主机名  
-		props.setProperty("mail.host","smtp.163.com");
+		props.setProperty("mail.host","smtp.sohu.com");
 //		props.setProperty("mail.smtp.host","smtp.163.com");
 		//发送邮件协议名称  
 		props.setProperty("mail.transport.protocol","smtp");
@@ -50,15 +50,12 @@ public class Email163Detect {
 			}
 			
 		} catch (Exception e) {
-			if(e.getMessage().contains("535 Error: authentication failed")){
+			if(e.getMessage().contains("535") || e.getMessage().contains("451")){
 				//password changed
 				status = 2;
-			}else if(e.getMessage().contains("550 User has no permission")){
+			}else if(e.getMessage().contains("550")){
 				//not open smtp, can retry in web page.
-				status = 3;
-			}else if(e.getMessage().contains("550 User is suspended")){
-				//not open smtp, can retry in web page.
-				status = 4;
+				status = 550;
 			}else{
 				e.printStackTrace();
 				//what is this?
@@ -69,15 +66,15 @@ public class Email163Detect {
 		return status;
 	}
 	
-	public static void testAll163Account(){
+	public static void testAllSohuAccount(){
 		long offset = 0;
 		long pagesize = 34;
 		List<CsdnAccount> cas = null;
 		do{
-			cas =CsdnAccountDaoImpl.listCsdnAccounts("163.com",offset,pagesize);
+			cas =CsdnAccountDaoImpl.listCsdnAccounts("sohu.com",offset,pagesize);
 			offset += pagesize;
 			for(CsdnAccount ca : cas){
-				ca.setStatus(test163mail(ca.getEmail(),ca.getPassword()));
+				ca.setStatus(testSohumail(ca.getEmail(),ca.getPassword()));
 				CsdnAccountDaoImpl.updateCsdnAccountStatusById(ca.getId(),ca.getStatus());
 				if(ca.getStatus()==1){
 					System.out.println("got it:" + ca);
@@ -90,7 +87,7 @@ public class Email163Detect {
 				}
 			}
 			
-			System.out.println(offset +"/1736250");
+			System.out.println(offset +"/103119");
 			
 			try {
 				Thread.sleep(5678);
@@ -102,7 +99,8 @@ public class Email163Detect {
 	}
 
 	public static void main(String[] args) {
-		testAll163Account();
+		testAllSohuAccount();
+//		System.out.println(testSohumail("abc@sohu.com","def"));
 	}
 
 }

@@ -9,9 +9,9 @@ import javax.mail.Transport;
 import org.shil.testcsdnetc.db.CsdnAccountDaoImpl;
 import org.shil.testcsdnetc.entity.CsdnAccount;
 
-public class Email163Detect {
+public class Email126Detect {
 
-	public static int test163mail(String email,String password){
+	public static int test126mail(String email,String password){
 		
 		int status = 0;
 		
@@ -23,7 +23,7 @@ public class Email163Detect {
 		//发送服务器需要身份验证  
 		props.setProperty("mail.smtp.auth","true");
 		//设置邮件服务器主机名  
-		props.setProperty("mail.host","smtp.163.com");
+		props.setProperty("mail.host","smtp.126.com");
 //		props.setProperty("mail.smtp.host","smtp.163.com");
 		//发送邮件协议名称  
 		props.setProperty("mail.transport.protocol","smtp");
@@ -59,6 +59,10 @@ public class Email163Detect {
 			}else if(e.getMessage().contains("550 User is suspended")){
 				//not open smtp, can retry in web page.
 				status = 4;
+			}else if(e.getMessage().contains("550")){
+				System.out.println(e.getMessage());
+				//550 has a lot of meaning
+				status = 550;
 			}else{
 				e.printStackTrace();
 				//what is this?
@@ -69,15 +73,15 @@ public class Email163Detect {
 		return status;
 	}
 	
-	public static void testAll163Account(){
+	public static void testAll126Account(){
 		long offset = 0;
 		long pagesize = 34;
 		List<CsdnAccount> cas = null;
 		do{
-			cas =CsdnAccountDaoImpl.listCsdnAccounts("163.com",offset,pagesize);
+			cas =CsdnAccountDaoImpl.listCsdnAccounts("126.com",offset,pagesize);
 			offset += pagesize;
 			for(CsdnAccount ca : cas){
-				ca.setStatus(test163mail(ca.getEmail(),ca.getPassword()));
+				ca.setStatus(test126mail(ca.getEmail(),ca.getPassword()));
 				CsdnAccountDaoImpl.updateCsdnAccountStatusById(ca.getId(),ca.getStatus());
 				if(ca.getStatus()==1){
 					System.out.println("got it:" + ca);
@@ -90,7 +94,7 @@ public class Email163Detect {
 				}
 			}
 			
-			System.out.println(offset +"/1736250");
+			System.out.println(offset +"/794692");
 			
 			try {
 				Thread.sleep(5678);
@@ -102,7 +106,8 @@ public class Email163Detect {
 	}
 
 	public static void main(String[] args) {
-		testAll163Account();
+		testAll126Account();
+//		System.out.println(test126mail("langzihai@126.com","langzihai123"));
 	}
 
 }

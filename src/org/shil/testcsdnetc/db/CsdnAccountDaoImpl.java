@@ -128,7 +128,7 @@ public class CsdnAccountDaoImpl {
 					
 					+ " from csdnaccount "
 
-					+ "where site = ? order by id offset ? limit ?"
+					+ "where site = ? and status = 0 order by id offset ? limit ?"
 
 					);
 

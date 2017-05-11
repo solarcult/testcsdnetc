@@ -47,6 +47,10 @@ public class CsdnAccount {
 	public void setId(long id) {
 		this.id = id;
 	}
+	
+	public void setStatus(int status) {
+		this.status = status;
+	}
 
 	@Override
 	public String toString() {

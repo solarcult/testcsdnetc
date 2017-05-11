@@ -18,5 +18,6 @@ ALTER TABLE csdnaccount
   OWNER TO postgres;
 COMMENT ON COLUMN csdnaccount.status IS '0:unknow
 1:avaliable
-2.changed';
-
+2.password changed | 535 Error: authentication failed
+3.not permisson, smtp not open | 550 User has no permission
+4.user is forbidden | 550 User is suspended';

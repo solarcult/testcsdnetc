@@ -1,0 +1,22 @@
+-- Table: csdnaccount
+
+-- DROP TABLE csdnaccount;
+
+CREATE TABLE csdnaccount
+(
+  id bigserial NOT NULL,
+  csdnname text,
+  password text,
+  email text,
+  site text,
+  status integer DEFAULT 0 -- 0:unknow...
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE csdnaccount
+  OWNER TO postgres;
+COMMENT ON COLUMN csdnaccount.status IS '0:unknow
+1:avaliable
+2.changed';
+

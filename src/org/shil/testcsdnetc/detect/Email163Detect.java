@@ -3,76 +3,74 @@ package org.shil.testcsdnetc.detect;
 import java.util.List;
 import java.util.Properties;
 
-import javax.mail.NoSuchProviderException;
 import javax.mail.Session;
 import javax.mail.Transport;
 
 import org.shil.testcsdnetc.db.CsdnAccountDaoImpl;
 import org.shil.testcsdnetc.entity.CsdnAccount;
 
+import com.sun.mail.util.MailConnectException;
+
 public class Email163Detect {
 
-	public static int test163mail(String email,String password){
-		
-		int status = 0;
-		
-		Properties props = new Properties();
-		
-		//开启debug调试  
-//		props.setProperty("mail.debug","true");
-		
-		//发送服务器需要身份验证  
-		props.setProperty("mail.smtp.auth","true");
-		//设置邮件服务器主机名  
-		props.setProperty("mail.host","smtp.163.com");
-//		props.setProperty("mail.smtp.host","smtp.163.com");
-		//发送邮件协议名称  
-		props.setProperty("mail.transport.protocol","smtp");
-		
-//		props.put("mail.smtp.port", "25"); //google使用465或587端口
-//		props.put("mail.smtp.starttls.enable","true"); //使用 STARTTLS安全连接:
+	public static int test163mail(String email, String password) {
 
-		//设置环境信息  
+		int status = 0;
+
+		Properties props = new Properties();
+
+		// 开启debug调试  
+		// props.setProperty("mail.debug","true");
+
+		// 发送服务器需要身份验证  
+		props.setProperty("mail.smtp.auth", "true");
+		// 设置邮件服务器主机名  
+		props.setProperty("mail.host", "smtp.163.com");
+		// props.setProperty("mail.smtp.host","smtp.163.com");
+		// 发送邮件协议名称  
+		props.setProperty("mail.transport.protocol", "smtp");
+
+		// props.put("mail.smtp.port", "25"); //google使用465或587端口
+		// props.put("mail.smtp.starttls.enable","true"); //使用 STARTTLS安全连接:
+
+		// 设置环境信息  
 		Session session = Session.getInstance(props);
 		Transport transport;
-		
+
 		try {
 			transport = session.getTransport();
 			
-			try {
-				
-				//连接邮件服务器
-				transport.connect(email.substring(0,email.indexOf("@")), password);
-				
-				System.out.println(email +"Result is " + transport.isConnected());
-				
-				if(transport.isConnected()){
-					status = 1;
-				}else{
-					//should not in here, expception out
-					System.out.println("warning should not here forever!");
-					status = 2;
-				}
-				
-			} catch (Exception e) {
-				if(e.getMessage().contains("535 Error: authentication failed")){
-					//password changed
-					status = 2;
-				}else if(e.getMessage().contains("550 User has no permission")){
-					//not open smtp, can retry in web page.
-					status = 3;
-				}else if(e.getMessage().contains("550 User is suspended")){
-					//not open smtp, can retry in web page.
-					status = 4;
-				}else{
-					System.out.println("what is this? 999");
-					e.printStackTrace();
-					//what is this?
-					status = 999;
-				}
+			// 连接邮件服务器
+			transport.connect(email.substring(0, email.indexOf("@")), password);
+
+			System.out.println(email + "Result is " + transport.isConnected());
+
+			if (transport.isConnected()) {
+				status = 1;
+			} else {
+				// should not in here, expception out
+				System.out.println("warning should not here forever!");
+				status = 2;
 			}
-		} catch (NoSuchProviderException e1) {
-			e1.printStackTrace();
+
+		} catch (MailConnectException em) {
+			em.printStackTrace();
+		} catch (Exception e) {
+			if (e.getMessage().contains("535 Error: authentication failed")) {
+				// password changed
+				status = 2;
+			} else if (e.getMessage().contains("550 User has no permission")) {
+				// not open smtp, can retry in web page.
+				status = 3;
+			} else if (e.getMessage().contains("550 User is suspended")) {
+				// not open smtp, can retry in web page.
+				status = 4;
+			} else {
+				System.out.println("what is this? 999");
+				e.printStackTrace();
+				// what is this?
+				status = 999;
+			}
 		}
 
 		return status;

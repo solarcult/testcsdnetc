@@ -3,12 +3,13 @@ package org.shil.testcsdnetc.detect;
 import java.util.List;
 import java.util.Properties;
 
-import javax.mail.NoSuchProviderException;
 import javax.mail.Session;
 import javax.mail.Transport;
 
 import org.shil.testcsdnetc.db.CsdnAccountDaoImpl;
 import org.shil.testcsdnetc.entity.CsdnAccount;
+
+import com.sun.mail.util.MailConnectException;
 
 public class EmailSinaDetect {
 
@@ -35,49 +36,43 @@ public class EmailSinaDetect {
 		//设置环境信息  
 		Session session = Session.getInstance(props);
 		Transport transport;
-		
+
 		try {
 			transport = session.getTransport();
+			//连接邮件服务器
+			transport.connect(email.substring(0,email.indexOf("@")), password);
 			
-			try {
-				
-				//连接邮件服务器
-				transport.connect(email.substring(0,email.indexOf("@")), password);
-				
-				System.out.println(email +"Result is " + transport.isConnected());
-				
-				if(transport.isConnected()){
-					status = 1;
-				}else{
-					//should not in here, expception out
-					System.out.println("warning should not here forever!");
-					status = 2;
-				}
-				
-			} catch (Exception e) {
-				if(e.getMessage().contains("535")){
-					//password changed
-					status = 2;
-				}else if(e.getMessage().contains("550 User has no permission")){
-					//not open smtp, can retry in web page.
-					status = 3;
-				}else if(e.getMessage().contains("550 User is suspended")){
-					//not open smtp, can retry in web page.
-					status = 4;
-				}else if(e.getMessage().contains("550")){
-					System.out.println(e.getMessage());
-					//550 has a lot of meaning
-					status = 550;
-				}else{
-					System.out.println("what is this? 999");
-					e.printStackTrace();
-					//what is this?
-					status = 999;
-				}
+			System.out.println(email +"Result is " + transport.isConnected());
+			
+			if(transport.isConnected()){
+				status = 1;
+			}else{
+				//should not in here, expception out
+				System.out.println("warning should not here forever!");
+				status = 2;
 			}
-			
-		} catch (NoSuchProviderException e1) {
-			e1.printStackTrace();
+		} catch(MailConnectException em){
+			em.printStackTrace();
+		} catch (Exception e) {
+			if(e.getMessage().contains("535")){
+				//password changed
+				status = 2;
+			}else if(e.getMessage().contains("550 User has no permission")){
+				//not open smtp, can retry in web page.
+				status = 3;
+			}else if(e.getMessage().contains("550 User is suspended")){
+				//not open smtp, can retry in web page.
+				status = 4;
+			}else if(e.getMessage().contains("550")){
+				System.out.println(e.getMessage());
+				//550 has a lot of meaning
+				status = 550;
+			}else{
+				System.out.println("what is this? 999");
+				e.printStackTrace();
+				//what is this?
+				status = 999;
+			}
 		}
 
 		return status;

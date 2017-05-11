@@ -3,6 +3,7 @@ package org.shil.testcsdnetc.detect;
 import java.util.List;
 import java.util.Properties;
 
+import javax.mail.NoSuchProviderException;
 import javax.mail.Session;
 import javax.mail.Transport;
 
@@ -34,35 +35,45 @@ public class EmailSohuDetect {
 		//设置环境信息  
 		Session session = Session.getInstance(props);
 		Transport transport;
+		
 		try {
 			transport = session.getTransport();
-			//连接邮件服务器
-			transport.connect(email.substring(0,email.indexOf("@")), password);
 			
-			System.out.println(email +"Result is " + transport.isConnected());
-			
-			if(transport.isConnected()){
-				status = 1;
-			}else{
-				//should not in here, expception out
-				System.out.println("warning should not here forever!");
-				status = 2;
+			try {
+				
+				//连接邮件服务器
+				transport.connect(email.substring(0,email.indexOf("@")), password);
+				
+				System.out.println(email +"Result is " + transport.isConnected());
+				
+				if(transport.isConnected()){
+					status = 1;
+				}else{
+					//should not in here, expception out
+					System.out.println("warning should not here forever!");
+					status = 2;
+				}
+				
+			} catch (Exception e) {
+				if(e.getMessage().contains("535") || e.getMessage().contains("451")){
+					//password changed
+					status = 2;
+				}else if(e.getMessage().contains("550")){
+					System.out.println(e.getMessage());
+					//not open smtp, can retry in web page.
+					status = 550;
+				}else{
+					System.out.println("what is this? 999");
+					e.printStackTrace();
+					//what is this?
+					status = 999;
+				}
 			}
 			
-		} catch (Exception e) {
-			if(e.getMessage().contains("535") || e.getMessage().contains("451")){
-				//password changed
-				status = 2;
-			}else if(e.getMessage().contains("550")){
-				//not open smtp, can retry in web page.
-				status = 550;
-			}else{
-				e.printStackTrace();
-				//what is this?
-				status = 999;
-			}
+		} catch (NoSuchProviderException e1) {
+			e1.printStackTrace();
 		}
-
+		
 		return status;
 	}
 	
@@ -81,7 +92,7 @@ public class EmailSohuDetect {
 				}
 				
 				try {
-					Thread.sleep(2345);
+					Thread.sleep(1234);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -90,7 +101,7 @@ public class EmailSohuDetect {
 			System.out.println(offset +"/103119");
 			
 			try {
-				Thread.sleep(5678);
+				Thread.sleep(2345);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

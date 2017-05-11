@@ -80,6 +80,37 @@ public class CsdnAccountDaoImpl {
 		}
 	}
 	
+	public static void updateCsdnAccountStatusById(long id,int status){
+		Connection connection = PostgresqlDataBaseManager.getConnection();
+		
+		PreparedStatement preparedStatement = null;
+
+		try{
+
+			preparedStatement = connection.prepareStatement(
+					
+				"update csdnaccount set status = ? where id = ?"
+			);
+
+			preparedStatement.setInt(1, status);
+			
+			preparedStatement.setLong(2, id);
+
+			preparedStatement.executeUpdate();
+
+		}catch(Exception e){
+
+			e.printStackTrace();
+
+		}finally{
+			try {
+				if(preparedStatement!=null) preparedStatement.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
 	public static List<CsdnAccount> listCsdnAccounts(String site, long offset,long pageSize){
 		List<CsdnAccount> accounts = new ArrayList<CsdnAccount>();
 		
@@ -149,10 +180,11 @@ public class CsdnAccountDaoImpl {
 //		CsdnAccount csdnAccount = new CsdnAccount("a","b","c@d");
 //		insertCsdnAccount(csdnAccount);
 //		updateCsdnAccountStatusByEmail("c@d",1);
-		List<CsdnAccount> ss = listCsdnAccounts("163.com",100,20);
-		for(CsdnAccount ca : ss){
-			System.out.println(ca);
-		}
+//		updateCsdnAccountStatusById(600256,0);
+//		List<CsdnAccount> ss = listCsdnAccounts("163.com",100,20);
+//		for(CsdnAccount ca : ss){
+//			System.out.println(ca);
+//		}
 	}
 
 }

@@ -60,6 +60,10 @@ public class EmailSohuDetect {
 			}else if(e.getMessage().contains("550")){
 				//not open smtp, can retry in web page.
 				status = 550;
+			}else if (e.getMessage().contains("554")) {
+				System.out.println(e.getMessage());
+				// 554 ip was block
+				status = 554;
 			}else{
 				System.out.println("what is this? 999 ");
 				e.printStackTrace();

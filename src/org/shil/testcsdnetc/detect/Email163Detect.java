@@ -65,6 +65,15 @@ public class Email163Detect {
 			} else if (e.getMessage().contains("550 User is suspended")) {
 				// not open smtp, can retry in web page.
 				status = 4;
+			} else if (e.getMessage().contains("554")) {
+				e.printStackTrace();
+				try {
+					Thread.sleep(34567);
+				} catch (InterruptedException e1) {
+					e1.printStackTrace();
+				}
+				// 554 ip was block
+				status = 554;
 			} else {
 				System.out.println("what is this? 999");
 				e.printStackTrace();
@@ -91,7 +100,7 @@ public class Email163Detect {
 				}
 				
 				try {
-					Thread.sleep(1234);
+					Thread.sleep(3456);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -100,7 +109,7 @@ public class Email163Detect {
 			System.out.println(offset +"/1736250");
 			
 			try {
-				Thread.sleep(2345);
+				Thread.sleep(4567);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

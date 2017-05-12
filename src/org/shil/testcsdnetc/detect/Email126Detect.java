@@ -69,6 +69,10 @@ public class Email126Detect {
 				System.out.println(e.getMessage());
 				// 550 has a lot of meaning
 				status = 550;
+			} else if (e.getMessage().contains("554")) {
+				System.out.println(e.getMessage());
+				// 554 ip was block
+				status = 554;
 			} else {
 				System.out.println("what is this? 999");
 				e.printStackTrace();
@@ -94,7 +98,7 @@ public class Email126Detect {
 				}
 				
 				try {
-					Thread.sleep(1234);
+					Thread.sleep(2234);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}

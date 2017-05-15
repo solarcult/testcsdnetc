@@ -52,7 +52,13 @@ public class EmailSohuDetect {
 			}
 			
 		}catch(MailConnectException em){
-			em.printStackTrace();
+//			em.printStackTrace();
+			try {
+				System.out.println("timeout sleep 98765");
+				Thread.sleep(98765);
+			} catch (InterruptedException e1) {
+				e1.printStackTrace();
+			}
 		}catch (Exception e) {
 			if(e.getMessage().contains("535") || e.getMessage().contains("451")){
 				//password changed
@@ -90,7 +96,7 @@ public class EmailSohuDetect {
 				}
 				
 				try {
-					Thread.sleep(1234);
+					Thread.sleep(3456);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -99,7 +105,7 @@ public class EmailSohuDetect {
 			System.out.println(offset +"/103119");
 			
 			try {
-				Thread.sleep(2345);
+				Thread.sleep(4567);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -109,7 +115,7 @@ public class EmailSohuDetect {
 
 	public static void main(String[] args) {
 		testAllSohuAccount();
-//		System.out.println(testSohumail("abc@sohu.com","def"));
+//		System.out.println(testSohumail("x@sohu.com",""));
 	}
 
 }

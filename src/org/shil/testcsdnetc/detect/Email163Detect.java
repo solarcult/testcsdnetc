@@ -55,6 +55,12 @@ public class Email163Detect {
 
 		} catch (MailConnectException em) {
 			em.printStackTrace();
+			try {
+				System.out.println("timeout sleep 98765");
+				Thread.sleep(98765);
+			} catch (InterruptedException e1) {
+				e1.printStackTrace();
+			}
 		} catch (Exception e) {
 			if (e.getMessage().contains("535 Error: authentication failed")) {
 				// password changed
@@ -68,7 +74,8 @@ public class Email163Detect {
 			} else if (e.getMessage().contains("554")) {
 				e.printStackTrace();
 				try {
-					Thread.sleep(34567);
+					System.out.println("554 timeout sleep 98765");
+					Thread.sleep(98765);
 				} catch (InterruptedException e1) {
 					e1.printStackTrace();
 				}
@@ -100,7 +107,7 @@ public class Email163Detect {
 				}
 				
 				try {
-					Thread.sleep(3456);
+					Thread.sleep(2345);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -109,7 +116,7 @@ public class Email163Detect {
 			System.out.println(offset +"/1736250");
 			
 			try {
-				Thread.sleep(4567);
+				Thread.sleep(3456);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

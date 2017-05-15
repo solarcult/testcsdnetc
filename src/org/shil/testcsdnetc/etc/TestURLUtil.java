@@ -97,8 +97,10 @@ public class TestURLUtil {
         try {
         	
         	HttpGet httpget = new HttpGet(cardurl);
-        	for(Header h : hs){
-        		httpget.addHeader(new BasicHeader(h.getName(),h.getValue()));
+        	if(hs!=null){
+	        	for(Header h : hs){
+	        		httpget.addHeader(new BasicHeader(h.getName(),h.getValue()));
+	        	}
         	}
             // Create a custom response handler
             ResponseHandler<String> responseHandler = new ResponseHandler<String>() {

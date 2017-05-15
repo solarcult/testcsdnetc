@@ -52,8 +52,15 @@ public class EmailSinaDetect {
 				status = 2;
 			}
 		} catch(MailConnectException em){
-			em.printStackTrace();
+//			em.printStackTrace();
+			try {
+				System.out.println("timeout sleep 98765");
+				Thread.sleep(98765);
+			} catch (InterruptedException e1) {
+				e1.printStackTrace();
+			}
 		} catch (Exception e) {
+//			e.printStackTrace();
 			if(e.getMessage().contains("535")){
 				//password changed
 				status = 2;
@@ -97,7 +104,7 @@ public class EmailSinaDetect {
 				}
 				
 				try {
-					Thread.sleep(1234);
+					Thread.sleep(2345);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -106,7 +113,7 @@ public class EmailSinaDetect {
 			System.out.println(offset +"/347859");
 			
 			try {
-				Thread.sleep(2345);
+				Thread.sleep(3456);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

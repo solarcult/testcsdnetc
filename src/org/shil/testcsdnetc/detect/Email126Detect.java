@@ -54,7 +54,13 @@ public class Email126Detect {
 			}
 
 		} catch (MailConnectException em) {
-			em.printStackTrace();
+//			em.printStackTrace();
+			try {
+				System.out.println("timeout sleep 98765");
+				Thread.sleep(98765);
+			} catch (InterruptedException e1) {
+				e1.printStackTrace();
+			}
 		} catch (Exception e) {
 			if (e.getMessage().contains("535 Error: authentication failed")) {
 				// password changed
@@ -70,7 +76,13 @@ public class Email126Detect {
 				// 550 has a lot of meaning
 				status = 550;
 			} else if (e.getMessage().contains("554")) {
-				System.out.println(e.getMessage());
+				e.printStackTrace();
+				try {
+					System.out.println("554 timeout sleep 98765");
+					Thread.sleep(98765);
+				} catch (InterruptedException e1) {
+					e1.printStackTrace();
+				}
 				// 554 ip was block
 				status = 554;
 			} else {
@@ -98,7 +110,7 @@ public class Email126Detect {
 				}
 				
 				try {
-					Thread.sleep(2234);
+					Thread.sleep(2345);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -107,7 +119,7 @@ public class Email126Detect {
 			System.out.println(offset +"/794692");
 			
 			try {
-				Thread.sleep(2345);
+				Thread.sleep(3456);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

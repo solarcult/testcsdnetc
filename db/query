@@ -1,0 +1,21 @@
+select count(1) from csdnaccount order by id;
+
+select * from csdnaccount  where site = '163.com' order by id offset 1010 limit 10 
+
+select * from csdnaccount where csdnname like '%ric77%'
+
+select count(1) from csdnaccount where status = 1
+
+select count(1) from csdnaccount where site = '163.com' and status = 1
+
+select * from csdnaccount where site = 'sina.com' and status = 1
+
+select count(1) from csdnaccount where site = '163.com' and status =554
+
+select site, count(1) b from csdnaccount  group by site order by b desc
+
+select * from csdnaccount where site = '126.com' limit 20
+
+select * from csdnaccount where site = 'sina.com' limit 20
+
+select count(1) from csdnaccount where site = 'sina.com.cn' and status = 0

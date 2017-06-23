@@ -1,5 +1,6 @@
 package org.shil.testcsdnetc.detect;
 
+import java.util.Calendar;
 import java.util.List;
 import java.util.Properties;
 
@@ -54,8 +55,8 @@ public class EmailSohuDetect {
 		}catch(MailConnectException em){
 //			em.printStackTrace();
 			try {
-				System.out.println("timeout sleep 98765");
-				Thread.sleep(98765);
+				System.out.println("timeout sleep 128765");
+				Thread.sleep(128765);
 			} catch (InterruptedException e1) {
 				e1.printStackTrace();
 			}
@@ -86,26 +87,28 @@ public class EmailSohuDetect {
 		long pagesize = 34;
 		List<CsdnAccount> cas = null;
 		do{
-			cas =CsdnAccountDaoImpl.listCsdnAccounts("sohu.com",offset,pagesize);
+			cas =CsdnAccountDaoImpl.listCsdnAccounts("sohu.com",0,pagesize);
 			offset += pagesize;
 			for(CsdnAccount ca : cas){
 				ca.setStatus(testSohumail(ca.getEmail(),ca.getPassword()));
 				CsdnAccountDaoImpl.updateCsdnAccountStatusById(ca.getId(),ca.getStatus());
 				if(ca.getStatus()==1){
 					System.out.println("got it:" + ca);
+				}else{
+					System.out.println(Calendar.getInstance().getTime()+ " :  sorry to fail : "+ ca.getEmail());
 				}
 				
 				try {
-					Thread.sleep(3456);
+					Thread.sleep(678901);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
 			}
 			
-			System.out.println(offset +"/103119");
+			System.out.println(Calendar.getInstance().getTime()+ " : "+ offset +"/103119");
 			
 			try {
-				Thread.sleep(4567);
+				Thread.sleep(45678);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -115,7 +118,7 @@ public class EmailSohuDetect {
 
 	public static void main(String[] args) {
 		testAllSohuAccount();
-//		System.out.println(testSohumail("x@sohu.com",""));
+//		System.out.println(testSohumail("lita_1999@sohu.com","6483026150"));
 	}
 
 }

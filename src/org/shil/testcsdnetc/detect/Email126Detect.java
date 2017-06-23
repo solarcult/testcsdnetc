@@ -1,5 +1,6 @@
 package org.shil.testcsdnetc.detect;
 
+import java.util.Calendar;
 import java.util.List;
 import java.util.Properties;
 
@@ -20,7 +21,7 @@ public class Email126Detect {
 		Properties props = new Properties();
 
 		// 开启debug调试  
-		// props.setProperty("mail.debug","true");
+//		 props.setProperty("mail.debug","true");
 
 		// 发送服务器需要身份验证  
 		props.setProperty("mail.smtp.auth", "true");
@@ -56,8 +57,8 @@ public class Email126Detect {
 		} catch (MailConnectException em) {
 //			em.printStackTrace();
 			try {
-				System.out.println("timeout sleep 98765");
-				Thread.sleep(98765);
+				System.out.println("timeout sleep 128765");
+				Thread.sleep(128765);
 			} catch (InterruptedException e1) {
 				e1.printStackTrace();
 			}
@@ -78,8 +79,8 @@ public class Email126Detect {
 			} else if (e.getMessage().contains("554")) {
 				e.printStackTrace();
 				try {
-					System.out.println("554 timeout sleep 98765");
-					Thread.sleep(98765);
+					System.out.println("554 timeout sleep 128765");
+					Thread.sleep(128765);
 				} catch (InterruptedException e1) {
 					e1.printStackTrace();
 				}
@@ -100,7 +101,7 @@ public class Email126Detect {
 		long pagesize = 34;
 		List<CsdnAccount> cas = null;
 		do{
-			cas =CsdnAccountDaoImpl.listCsdnAccounts("126.com",offset,pagesize);
+			cas =CsdnAccountDaoImpl.listCsdnAccounts("126.com",0,pagesize);
 			offset += pagesize;
 			for(CsdnAccount ca : cas){
 				ca.setStatus(test126mail(ca.getEmail(),ca.getPassword()));
@@ -110,16 +111,16 @@ public class Email126Detect {
 				}
 				
 				try {
-					Thread.sleep(2345);
+					Thread.sleep(7890);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
 			}
 			
-			System.out.println(offset +"/794692");
+			System.out.println(Calendar.getInstance().getTime()+ " : "+ offset +"/794692");
 			
 			try {
-				Thread.sleep(3456);
+				Thread.sleep(12345);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -129,7 +130,7 @@ public class Email126Detect {
 
 	public static void main(String[] args) {
 		testAll126Account();
-//		System.out.println(test126mail("langzihai@126.com","langzihai123"));
+//		System.out.println(test126mail("WHY_kandy@126.com","kandybaby"));
 	}
 
 }

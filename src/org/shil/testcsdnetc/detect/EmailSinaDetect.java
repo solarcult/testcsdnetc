@@ -1,5 +1,6 @@
 package org.shil.testcsdnetc.detect;
 
+import java.util.Calendar;
 import java.util.List;
 import java.util.Properties;
 
@@ -94,26 +95,28 @@ public class EmailSinaDetect {
 		long pagesize = 34;
 		List<CsdnAccount> cas = null;
 		do{
-			cas =CsdnAccountDaoImpl.listCsdnAccounts("sina.com",offset,pagesize);
+			cas =CsdnAccountDaoImpl.listCsdnAccounts("sina.com",0,pagesize);
 			offset += pagesize;
 			for(CsdnAccount ca : cas){
 				ca.setStatus(testSinamail(ca.getEmail(),ca.getPassword()));
 				CsdnAccountDaoImpl.updateCsdnAccountStatusById(ca.getId(),ca.getStatus());
 				if(ca.getStatus()==1){
 					System.out.println("got it:" + ca);
+				}else{
+					System.out.println(Calendar.getInstance().getTime()+ " :  sorry to fail : "+ ca.getEmail());
 				}
 				
 				try {
-					Thread.sleep(2345);
+					Thread.sleep(45678);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
 			}
 			
-			System.out.println(offset +"/347859");
+			System.out.println(Calendar.getInstance().getTime()+ " : "+ offset +"/347859");
 			
 			try {
-				Thread.sleep(3456);
+				Thread.sleep(56789);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -123,7 +126,7 @@ public class EmailSinaDetect {
 
 	public static void main(String[] args) {
 		testAllSinaAccount();
-//		System.out.println(testSinamail("kobe6446@sina.com","84894356"));
+//		System.out.println(testSinamail("bullman2009@sina.com","bullman2009"));
 	}
 
 }

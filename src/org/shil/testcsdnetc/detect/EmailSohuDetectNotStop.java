@@ -1,5 +1,6 @@
 package org.shil.testcsdnetc.detect;
 
+import java.util.Calendar;
 import java.util.List;
 import java.util.Properties;
 
@@ -91,7 +92,7 @@ public class EmailSohuDetectNotStop {
 			
 			testSohuSMTPNotStop(cas);
 			
-			System.out.println(offset +"/103119");
+			System.out.println(Calendar.getInstance().getTime()+ " : "+ offset +"/103119");
 			
 			try {
 				Thread.sleep(5678);

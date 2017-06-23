@@ -1,5 +1,6 @@
 package org.shil.testcsdnetc.detect;
 
+import java.util.Calendar;
 import java.util.List;
 import java.util.Properties;
 
@@ -20,7 +21,7 @@ public class Email163Detect {
 		Properties props = new Properties();
 
 		// 开启debug调试  
-		// props.setProperty("mail.debug","true");
+//		 props.setProperty("mail.debug","true");
 
 		// 发送服务器需要身份验证  
 		props.setProperty("mail.smtp.auth", "true");
@@ -56,8 +57,8 @@ public class Email163Detect {
 		} catch (MailConnectException em) {
 			em.printStackTrace();
 			try {
-				System.out.println("timeout sleep 98765");
-				Thread.sleep(98765);
+				System.out.println("timeout sleep 128765");
+				Thread.sleep(128765);
 			} catch (InterruptedException e1) {
 				e1.printStackTrace();
 			}
@@ -74,8 +75,8 @@ public class Email163Detect {
 			} else if (e.getMessage().contains("554")) {
 				e.printStackTrace();
 				try {
-					System.out.println("554 timeout sleep 98765");
-					Thread.sleep(98765);
+					System.out.println("554 timeout sleep 128765");
+					Thread.sleep(128765);
 				} catch (InterruptedException e1) {
 					e1.printStackTrace();
 				}
@@ -97,7 +98,7 @@ public class Email163Detect {
 		long pagesize = 34;
 		List<CsdnAccount> cas = null;
 		do{
-			cas =CsdnAccountDaoImpl.listCsdnAccounts("163.com",offset,pagesize);
+			cas =CsdnAccountDaoImpl.listCsdnAccounts("163.com",0,pagesize);
 			offset += pagesize;
 			for(CsdnAccount ca : cas){
 				ca.setStatus(test163mail(ca.getEmail(),ca.getPassword()));
@@ -107,16 +108,16 @@ public class Email163Detect {
 				}
 				
 				try {
-					Thread.sleep(2345);
+					Thread.sleep(7890);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
 			}
 			
-			System.out.println(offset +"/1736250");
+			System.out.println(Calendar.getInstance().getTime()+ " : "+ offset +"/1736250");
 			
 			try {
-				Thread.sleep(3456);
+				Thread.sleep(12345);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -126,6 +127,7 @@ public class Email163Detect {
 
 	public static void main(String[] args) {
 		testAll163Account();
+//		System.out.println(test163mail("bai7604@163.com","19851209"));
 	}
 
 }

@@ -116,9 +116,9 @@ public class DoubanHttpTest {
 	
 
 	public static void main(String[] args){
-//		testDoubanAccount("soulmusicfly@163.com","sl134120");
+//		testDoubanAccount("xxx@163.com","yyy");
 //		test163Douban();
-//		System.out.println("ue=\"soulmusicfly@163.com\"; domain=.douban.com; expires=Sat, 12-May-2018 11:17:55 GMT; httponly".contains("ue="));
-//		System.out.println("ue=\"soulmusicfly@163.com\"; domain=.douban.com; expires=Sat, 12-May-2018 11:17:55 GMT; httponly".contains("soulmusicfly@163.com"));
+//		System.out.println("ue=\"xxx@163.com\"; domain=.douban.com; expires=Sat, 12-May-2018 11:17:55 GMT; httponly".contains("ue="));
+//		System.out.println("ue=\"xxx@163.com\"; domain=.douban.com; expires=Sat, 12-May-2018 11:17:55 GMT; httponly".contains("xxx@163.com"));
 	}
 }

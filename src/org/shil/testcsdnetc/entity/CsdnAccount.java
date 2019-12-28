@@ -15,7 +15,7 @@ public class CsdnAccount {
 		this.email = email;
 		if(this.email!=null && !this.email.trim().isEmpty()){
 			int atindex = this.email.indexOf("@");
-			this.site = this.email.substring(atindex+1);
+			this.site = this.email.substring(atindex+1).toLowerCase();
 		}
 		this.status = status;
 	}
